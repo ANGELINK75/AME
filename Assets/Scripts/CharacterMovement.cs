@@ -29,11 +29,6 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (playerTransform.position.z > .1f || playerTransform.position.z < -.1f)
-        {
-            playerTransform.SetPositionAndRotation(new Vector3(playerTransform.position.x,playerTransform.position.y,0),playerTransform.rotation);
-        }
         
         //movement for the player character
         if (Input.GetKey(KeyCode.D))
