@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,10 +13,12 @@ public class CharacterControl : MonoBehaviour
     public Transform cameraTransform;
     public Transform playerTransform;
     public float SmoothTime;
-
-    private bool flag;
-    private Vector3 velocity = Vector3.zero;
-    private Vector3 Offset;
+    public float extraJumpForce;
+    
+    private bool _grounded;
+    private bool _grabFlag;
+    private Vector3 _velocity = Vector3.zero;
+    private Vector3 _offset;
     private Rigidbody player;
     Vector3 jump = Vector3.up * 10f;
     // Start is called before the first frame update
@@ -23,8 +26,9 @@ public class CharacterControl : MonoBehaviour
     {
         player = GetComponent<Rigidbody>();
 
+        extraJumpForce = 0f;
 
-        Offset = cameraTransform.position - playerTransform.position;
+        _offset = cameraTransform.position - playerTransform.position;
     }
 
     // Update is called once per frame
@@ -41,22 +45,25 @@ public class CharacterControl : MonoBehaviour
         {
             transform.Translate(new Vector3(-speed * Time.deltaTime, 0, 0));
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        
+        //Jump
+        if (Input.GetKeyDown(KeyCode.Space) && _grounded)
         {
             player.AddForce(jump * jumpForce, ForceMode.Impulse);
+            
         }
-
-        if (Input.GetKeyDown(KeyCode.V))
+        
+        //Grab object
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            if (!flag)
+            if (!_grabFlag)
             {
                 if (FindClosestObjectWithinRadius(grabReach))
                 {
                     CustomTags objectToMove = FindClosestObjectWithinRadius(grabReach).GetComponent<CustomTags>() as CustomTags;
                     objectToMove.Rename(0, "selected");
                     Debug.Log(objectToMove.GetAtIndex(0));
-                    flag = true;
+                    _grabFlag = true;
                 }
             }
             else
@@ -66,16 +73,16 @@ public class CharacterControl : MonoBehaviour
                     CustomTags objectToMove = FindClosestObjectWithinRadius(grabReach).GetComponent<CustomTags>() as CustomTags;
                     objectToMove.Rename(0, "unselected");
                     Debug.Log(objectToMove.GetAtIndex(0));
-                    flag = false;
+                    _grabFlag = false;
                 }
             }
             
 
         }
+        
         //code for the camera to follow the player
-        Vector3 targetPosition = playerTransform.position + Offset;
-        //targetPosition = Vector3.Scale(targetPosition, new Vector3(1, .2f, 1));  
-        cameraTransform.position = Vector3.SmoothDamp(cameraTransform.position, targetPosition, ref velocity, SmoothTime);
+        Vector3 targetPosition = playerTransform.position + _offset;
+        cameraTransform.position = Vector3.SmoothDamp(cameraTransform.position, targetPosition, ref _velocity, SmoothTime);
 
         transform.LookAt(playerTransform);
     }
@@ -102,5 +109,25 @@ public class CharacterControl : MonoBehaviour
             }
         }
         return closest;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "floor")
+        {
+            _grounded = true;
+            Debug.Log("grounded true");
+            
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "floor")
+        {
+            _grounded = false;
+            Debug.Log("grounded false");
+
+        }
     }
 }

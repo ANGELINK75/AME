@@ -1375,7 +1375,7 @@ GameObject:
   - component: {fileID: 465276681}
   m_Layer: 0
   m_Name: PlayerPlaceholder
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1488,6 +1488,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 1108696537}
   playerTransform: {fileID: 465276680}
   SmoothTime: 0.3
+  extraJumpForce: 0
 --- !u!1 &502106987
 GameObject:
   m_ObjectHideFlags: 0
