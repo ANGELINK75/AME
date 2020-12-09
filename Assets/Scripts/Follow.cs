@@ -19,8 +19,8 @@ public class Follow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        pointingTarget = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.back * Camera.main.transform.position.z);
-        transform.LookAt(pointingTarget, Vector3.up);
+        pointingTarget = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.back * (Camera.main.transform.position.z));
+        transform.LookAt(pointingTarget, Vector3.back);
         
     }
 }
