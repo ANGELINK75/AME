@@ -38,8 +38,8 @@ public class UmbrellaMovement : MonoBehaviour
                       umbrellaParent.rotation = _umbrellaRotation;
                   }
              */
-        pointingTarget = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.back * Camera.main.transform.position.z);
-        umbrellaParent.LookAt(pointingTarget, Vector3.up);
+        pointingTarget = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.back * (Camera.main.transform.position.z-90f));
+        umbrellaParent.LookAt(pointingTarget, Vector3.back);
 
     }
 }
