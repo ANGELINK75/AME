@@ -36,12 +36,12 @@ public class CharacterControl : MonoBehaviour
     {
 
         //movement for the player character
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0));
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(new Vector3(-speed * Time.deltaTime, 0, 0));
         }
