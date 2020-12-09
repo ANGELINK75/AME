@@ -113,7 +113,8 @@ public class CharacterControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "floor")
+        CustomTags objectToJump = collision.gameObject.GetComponent<CustomTags>() as CustomTags;
+        if (objectToJump.HasTag("floor"))
         {
             _grounded = true;
             Debug.Log("grounded true");
@@ -123,11 +124,12 @@ public class CharacterControl : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "floor" || collision.gameObject.tag == "Grabbable")
+       CustomTags objectToJump = collision.gameObject.GetComponent<CustomTags>() as CustomTags;
+        if (objectToJump.HasTag("floor"))
         {
             _grounded = false;
             Debug.Log("grounded false");
-
+            
         }
     }
 }
