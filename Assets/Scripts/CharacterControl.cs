@@ -123,7 +123,7 @@ public class CharacterControl : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "floor")
+        if (collision.gameObject.tag == "floor" || collision.gameObject.tag == "Grabbable")
         {
             _grounded = false;
             Debug.Log("grounded false");
